@@ -1,7 +1,7 @@
 import React from 'react';
 import Board from './board/board.js';
 import './tic-tac-toe.scss';
-  
+
   class TicTactoe extends React.Component {
     // state.history.squares records the status of each Square - X, O, or null
     constructor(props) {
@@ -19,6 +19,12 @@ import './tic-tac-toe.scss';
     
     // Updates the TicTacToe's history.squares and stepNumber when a Square is clicked.
     handleClick(i) {
+
+      // --------- Client-side here: ---------
+      this.props.onBoardClick({ player: "X", xIsNext: this.state.xIsNext });
+
+      // --------- Rules / To-be-server-code below: ---------
+
       // Wipe the previous history beyond this point (future has changed)
       const history = this.state.history.slice(0, this.state.stepNumber + 1);
       const current = history[history.length - 1];
@@ -26,6 +32,7 @@ import './tic-tac-toe.scss';
       if (squares[i] || getGameResult(squares)) {
         return ;
       }
+      
       squares[i] = this.state.xIsNext ? "X" : "O";
       this.setState({ 
         history: [...history, { squares: squares }],
@@ -47,7 +54,6 @@ import './tic-tac-toe.scss';
 
       const gameResult = getGameResult(current.squares);
       let status; 
-      console.log(gameResult);
       if (!gameResult) {
         status = `Next player: ${this.state.xIsNext ? "X" : "O"}`;
       } else if (gameResult === "Tie") {
@@ -56,6 +62,7 @@ import './tic-tac-toe.scss';
         status = `Winner: ${gameResult}`
       }
 
+      // eslint-disable-next-line no-unused-vars
       const moves = history.map((step, move) => {
         const desc = move ? "Go to move #" + move : "Go to game start";
         return (
@@ -72,7 +79,7 @@ import './tic-tac-toe.scss';
           </div>
           <div className="game-info">
             <div>{status}</div>
-            <ol>{moves}</ol>
+            {/* <ol>{moves}</ol> */}
           </div>
         </div>
       );
