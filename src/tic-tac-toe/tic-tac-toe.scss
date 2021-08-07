@@ -1,0 +1,17 @@
+.game {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+
+    .game-board {
+        border: 1px solid #999;
+    }
+
+    .game-info {
+        margin-left: 20px;
+        
+        ol, ul {
+            padding-left: 30px;
+        }
+    }
+}
