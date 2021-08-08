@@ -28,22 +28,49 @@ function App() {
     }, [syncrosse, userRole]);
 
     return (
-        <div class="app-container">
-            <TicTacToe
-                role={userRole}
-                // requestObj has player field & squareNum field
-                onBoardClick={(requestObj) => syncrosse.performAction("playerTurn", requestObj)}
-                playerMove={playerMove}
-            />
+        <div className="app-container">
+            <div className="header">
+                <div className="vertical-alignment-div">
+                    ULTIMATE TIC-TAC-TOE
+                </div>
+            </div>
 
-            <div>
-                {messages.map((msg, index) => (
-                    <p key={index}>
-                        {msg.author} {msg.content}
-                    </p>
-                ))}
-                <input ref={inputRef}></input>
-                <button onClick={() => syncrosse.sendMessage(inputRef.current.value)}>Send</button>
+            <div className="components-container">
+                <div className="info-panel">
+                </div>
+
+                <TicTacToe
+                    role={userRole}
+                    // requestObj has player field & squareNum field
+                    onBoardClick={(requestObj) => syncrosse.performAction("playerTurn", requestObj)}
+                    playerMove={playerMove}
+                />
+
+                <div className="chat-box">
+                    <div className="chat-button-container">
+                        <button 
+                            className="send-button" 
+                            onClick={() => {
+                                syncrosse.sendMessage(inputRef.current.value)
+                                inputRef.current.value = null;
+                            }}
+                        >
+                            Send
+                        </button>
+                    </div>
+                    <div className="chat-text">
+                        <div className="input-div">
+                            <input ref={inputRef}></input>
+                        </div>
+                        <div className="chat-history">
+                            {messages.map((msg, index) => (
+                                <p key={index}>
+                                    {msg.author} {msg.content}
+                                </p>
+                            ))}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );

@@ -1,6 +1,75 @@
 .app-container {
     display: flex;
-    flex-direction: row;
-    height: 300px;
-    width: 500px;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    height: 100%;
+    background-color: #e1f4f7;
+    border: 1px #878787;
+
+    .header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        height: 10%;
+        width: 100%;
+        background-color: #51cfe8;
+        font-size: 26px;
+        text-align: center;
+
+        .vertical-alignment-div {
+            margin: auto; 
+        }
+    }
+
+    .components-container {
+        height: 90%;
+        display: flex;
+        flex-direction: row;
+        align-content: center;
+
+        .info-panel {
+            width: 20%;
+            min-height: 100%;
+            background-color: white;
+        }
+
+        .chat-box {
+            width: 20%;
+            min-height: 100%;
+            background-color: white;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+
+            .chat-button-container {
+                flex-grow: 1;
+                padding-left: 10px;
+                display: flex;
+                align-items: flex-end;
+                margin-bottom: 10px;
+            }
+
+            .chat-text {
+                display: flex;
+                flex-direction: column-reverse;
+                flex-grow: 5;
+                margin-bottom: 10px;
+
+                .input-div {
+                    input {
+                        width: 85%;
+                    }
+                }
+
+                .chat-history {
+                    display: flex;
+                    flex-direction: column;
+                    height: 100vh;
+                    overflow-y: scroll;
+                }
+            }
+        }
+    }
 }
