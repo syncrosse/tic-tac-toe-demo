@@ -103,7 +103,7 @@ module.exports = function (proxy, allowedHost) {
     // `proxy` is run between `before` and `after` `webpack-dev-server` hooks
     proxy: {
       '/socket.io/**': {
-        target: 'ws://localhost:5001',
+        target: 'ws://localhost:80',
         ws: true,
       }
     },

@@ -7,6 +7,8 @@ const http = require('http');
 const server = http.createServer(app);
 const syncrosse = new Syncrosse(server);
 
+const port = process.env.PORT || 80;
+
 app.use(express.static(path.join(__dirname, '../build')));
 console.log(path.join(__dirname, '../build/static'));
 
@@ -37,8 +39,8 @@ syncrosse.onLeave(() => {
 
 syncrosse.start();
 
-server.listen(80, () => {
-    console.log("listening on *80");
+server.listen(port, () => {
+    console.log("listening on *" + port);
 });
 
 // ================ Vars?? ================
