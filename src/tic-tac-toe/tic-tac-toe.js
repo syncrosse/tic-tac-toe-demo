@@ -17,6 +17,25 @@ import './tic-tac-toe.scss';
       }
     }
     
+    // FOR SERVER USE ONLY (doesn't check legality)
+    handleClickOverride(i) {
+      const history = this.state.history.slice(0, this.state.stepNumber + 1);
+      const current = history[history.length - 1];
+      const squares = current.squares.slice();
+
+      this.props.onBoardClick({ 
+        player: this.props.role, 
+        squareNum: i
+      });
+      
+      squares[i] = this.state.xIsNext ? "X" : "O";
+      this.setState({ 
+        history: [...history, { squares: squares }],
+        stepNumber: history.length,
+        xIsNext: !this.state.xIsNext 
+      });
+    }
+
     // Updates the TicTacToe's history.squares and stepNumber when a Square is clicked.
     handleClick(i) {
       // Ready to wipe the previous history beyond this point (future has changed)
@@ -29,7 +48,7 @@ import './tic-tac-toe.scss';
       if (squares[i] || this.props.role !== playerTurn || getGameResult(squares)) {
         return ;
       }
-      
+
       // Communicate to server
       this.props.onBoardClick({ 
         player: this.props.role, 
@@ -66,6 +85,17 @@ import './tic-tac-toe.scss';
         status = `Winner: ${gameResult}`
       }
 
+      // Check if the playerMove is already rendered - if not, update the state.
+      console.log(this.props.playerMove)
+      if (this.props.playerMove) {
+        const playMovedSquare = this.props.playerMove.squareNum;
+        if (!current.squares[playMovedSquare]) {
+          console.log("cp12");
+          console.log(playMovedSquare);
+          this.handleClickOverride(playMovedSquare);
+        }
+      }
+
       // eslint-disable-next-line no-unused-vars
       const moves = history.map((step, move) => {
         const desc = move ? "Go to move #" + move : "Go to game start";
@@ -82,6 +112,7 @@ import './tic-tac-toe.scss';
             <Board squares={current.squares} onClick={(i) => this.handleClick(i)}/>
           </div>
           <div className="game-info">
+            <div>Your Mark: {this.props.role}</div>
             <div>{status}</div>
             {/* <ol>{moves}</ol> */}
           </div>

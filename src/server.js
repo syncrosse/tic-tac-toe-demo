@@ -5,16 +5,15 @@ const http = require('http');
 const server = http.createServer(app);
 const syncrosse = new Syncrosse(server);
 
-syncrosse.newLobby("general");
-
 // ================ Incoming ================
 
 // Action: onJoin
 // Event: assignRole
-syncrosse.onJoin(({lobby}) => {
-    // numPlayers++;
+syncrosse.onJoin(({user}) => {
+    const nextRole = getNextRole();
+    user.triggerEvent("assignRole", nextRole);
+    numPlayers++;
     console.log(`Player ${numPlayers} has joined`);
-    lobby.triggerEvent("assignRole", getNextRole());
 });
 
 // Action: playerTurn
@@ -27,7 +26,7 @@ syncrosse.onAction("playerTurn", ({ data, lobby }) => {
 
 // Action: onLeave
 syncrosse.onLeave(() => {
-    // numPlayers--;
+    numPlayers--;
     console.log(`A player has left, now ${numPlayers} remain`);
 });
 
@@ -40,12 +39,11 @@ server.listen(5001, () => {
 // ================ Vars?? ================
 
 let numPlayers = 0;
-let nextRoleCounter = 0;
 
 // ================ Helpers ================
 
 function getNextRole() {
-    switch(nextRoleCounter) {
+    switch(numPlayers) {
         case 0:
             return "X";
         case 1:
