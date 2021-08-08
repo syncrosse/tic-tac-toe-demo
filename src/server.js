@@ -1,9 +1,14 @@
+const path = require("path");
+
 const { Syncrosse } = require('@syncrosse/server');
 const express = require('express');
 const app = express(); 
 const http = require('http');
 const server = http.createServer(app);
 const syncrosse = new Syncrosse(server);
+
+app.use(express.static(path.join(__dirname, '../build')));
+console.log(path.join(__dirname, '../build/static'));
 
 // ================ Incoming ================
 
