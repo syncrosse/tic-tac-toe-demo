@@ -86,12 +86,9 @@ import './tic-tac-toe.scss';
       }
 
       // Check if the playerMove is already rendered - if not, update the state.
-      console.log(this.props.playerMove)
       if (this.props.playerMove) {
         const playMovedSquare = this.props.playerMove.squareNum;
         if (!current.squares[playMovedSquare]) {
-          console.log("cp12");
-          console.log(playMovedSquare);
           this.handleClickOverride(playMovedSquare);
         }
       }

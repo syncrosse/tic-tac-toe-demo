@@ -20,8 +20,6 @@ function App() {
         
         syncrosse.onEvent("playerMoved", (data) => {
             if (data.player !== userRole) {
-                console.log("playerMoved: ");
-                console.log(data);
                 setPlayerMove(data);
             }
         });

@@ -37,8 +37,8 @@ syncrosse.onLeave(() => {
 
 syncrosse.start();
 
-server.listen(5001, () => {
-    console.log("listening on *5001");
+server.listen(80, () => {
+    console.log("listening on *80");
 });
 
 // ================ Vars?? ================
