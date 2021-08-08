@@ -19,20 +19,24 @@ import './tic-tac-toe.scss';
     
     // Updates the TicTacToe's history.squares and stepNumber when a Square is clicked.
     handleClick(i) {
-
-      // --------- Client-side here: ---------
-      this.props.onBoardClick({ player: "X", xIsNext: this.state.xIsNext });
-
-      // --------- Rules / To-be-server-code below: ---------
-
-      // Wipe the previous history beyond this point (future has changed)
+      // Ready to wipe the previous history beyond this point (future has changed)
       const history = this.state.history.slice(0, this.state.stepNumber + 1);
       const current = history[history.length - 1];
       const squares = current.squares.slice();
-      if (squares[i] || getGameResult(squares)) {
+
+      // Check if legal move
+      const playerTurn = this.state.xIsNext ? "X" : "O";
+      if (squares[i] || this.props.role !== playerTurn || getGameResult(squares)) {
         return ;
       }
       
+      // Communicate to server
+      this.props.onBoardClick({ 
+        player: this.props.role, 
+        squareNum: i
+      });
+      
+      // Update state
       squares[i] = this.state.xIsNext ? "X" : "O";
       this.setState({ 
         history: [...history, { squares: squares }],
